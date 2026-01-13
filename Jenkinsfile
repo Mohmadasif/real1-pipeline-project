@@ -1,30 +1,33 @@
 pipeline {
   agent any 
 
-  stages{
+  stages {
 
-    stage('Checkout code'){
+    stage('Checkout code') {
       steps {
         echo 'Pulling code from github'
         checkout scm
       }
     }
+
     stage('Build') {
       steps {
         echo 'Building the application'
-        sh 'ls -l'
+        bat 'dir'
       }
     }
+
     stage('Test') {
-      steps{
+      steps {
         echo 'Testing the application'
-        sh 'bash test.sh'
+        bat 'test.bat'
       }
     }
+
     stage('Deploy') {
       steps {
         echo 'Deploying the application'
-        sh 'echo "Website CI pipeline executed successfully!"'
+        bat 'echo Website CI pipeline executed successfully!'
       }
     }
   }
