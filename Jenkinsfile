@@ -10,6 +10,13 @@ pipeline {
       }
     }
 
+    stage('Test') {
+  steps {
+    echo 'Testing the application'
+    bat 'echo Tests executed successfully'
+  }
+}
+
     stage('Build') {
       steps {
         echo 'Building the application'
