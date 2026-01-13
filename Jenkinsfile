@@ -1,50 +1,43 @@
 pipeline {
-  agent any 
+    agent any
 
-  stages {
+    stages {
 
-    stage('Checkout code') {
-      steps {
-        echo 'Pulling code from github'
-        checkout scm
-      }
+        stage('Checkout Code') {
+            steps {
+                echo 'Pulling code from Git repository'
+                checkout scm
+            }
+        }
+
+        stage('Build') {
+            steps {
+                echo 'Building website (static build)'
+                sh 'ls -l'
+            }
+        }
+
+        stage('Test Website Files') {
+            steps {
+                echo 'Running validation tests'
+                sh 'bash test.sh'
+            }
+        }
+
+        stage('Final Output') {
+            steps {
+                echo 'CI Pipeline executed successfully'
+                sh 'echo "Website pipeline completed successfully"'
+            }
+        }
     }
 
-    stage('Test') {
-  steps {
-    echo 'Testing the application'
-    bat 'echo Tests executed successfully'
-  }
-}
-
-    stage('Build') {
-      steps {
-        echo 'Building the application'
-        bat 'dir'
-      }
+    post {
+        success {
+            echo '✅ PIPELINE SUCCESS'
+        }
+        failure {
+            echo '❌ PIPELINE FAILED'
+        }
     }
-
-    stage('Test') {
-      steps {
-        echo 'Testing the application'
-        bat 'test.bat'
-      }
-    }
-
-    stage('Deploy') {
-      steps {
-        echo 'Deploying the application'
-        bat 'echo Website CI pipeline executed successfully!'
-      }
-    }
-  }
-
-  post {
-    success {
-      echo 'CI pipeline Success'
-    }
-    failure {
-      echo 'CI pipeline failure'
-    }
-  }
 }
